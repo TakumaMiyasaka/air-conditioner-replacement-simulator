@@ -675,17 +675,6 @@
           </div>
         </div>
         <div class="field-group">
-          <label>過去3年の同種補助金受給歴<span class="req">必須</span></label>
-          <div class="select-wrap">
-            <select id="pastReceipt">
-              <option value="">選択してください</option>
-              <option value="none">なし</option>
-              <option value="yes">あり</option>
-              <option value="unknown">不明</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-group">
           <label>省エネ診断の受診状況<span class="req">必須</span></label>
           <div class="select-wrap">
             <select id="energyAudit">
@@ -1015,14 +1004,6 @@ function judgeSubsidy(s, input) {
     return { status: 'consult', reason: '更新目的に「省エネ」が含まれていないため。省エネ目的の明示が必要です。' };
   }
 
-  // Step10: 過去受給歴
-  if (input.pastReceipt === 'unknown' || !input.pastReceipt) {
-    return { status: 'consult', reason: '過去の補助金受給歴が「不明」のため、重複受給制限の確認が必要。' };
-  }
-  if (input.pastReceipt === 'yes') {
-    return { status: 'consult', reason: '過去3年の受給歴があるため、対象範囲の重複可否を個別確認します。' };
-  }
-
   return { status: 'available', reason: 'お客様の入力情報から、活用可能性があります。詳細はお問い合わせください。' };
 }
 
@@ -1120,7 +1101,6 @@ function getInput() {
     failureCount: document.getElementById('failureCount').value,
     purposes: purposes,
     investRange: document.getElementById('investRange').value,
-    pastReceipt: document.getElementById('pastReceipt').value,
     energyAudit: document.getElementById('energyAudit').value
   };
 }
@@ -1129,7 +1109,7 @@ function validate(input) {
   const required = [
     input.prefecture, input.industry, input.entityType, input.companySize,
     input.ageYears, input.unitCount, input.horsepower, input.dailyHours,
-    input.annualDays, input.failureCount, input.investRange, input.pastReceipt,
+    input.annualDays, input.failureCount, input.investRange,
     input.energyAudit
   ];
   if (required.some(v => v === '' || v === null || v === undefined)) return false;
